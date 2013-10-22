@@ -12,6 +12,15 @@
 
   angular.module = function(name) {
     var moduleInstance = _module.apply(angular, arguments);
+    var useNamespace = false;
+    
+    moduleInstance.namespace = function(flag) {
+      if (typeof flag === 'boolean') {
+        useNamespace = flag;
+      }
+      
+      return moduleInstance;
+    };
 
     angular.forEach(methods, function(method) {
       var _method = moduleInstance[method];
@@ -19,7 +28,7 @@
       moduleInstance[method] = function(providerName) {
         var args = slice.call(arguments);
       
-        if (!/^(\$|[ng]+)/.test(providerName)) {
+        if (useNamespace) {
           args[0] = name + '.' + providerName;
         }
 
