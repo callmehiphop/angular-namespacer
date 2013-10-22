@@ -7,9 +7,10 @@ Angular Namespacer essentially hacks `angular.module` and renames your Providers
 
 ```javascript
 angular.module('util', [])
-  .factory('thing', function() {
-    return 1 + 2;
-  });
+  .namespace(true)
+    .factory('thing', function() {
+      return 1 + 2;
+    });
 
 angular.module('myApp', ['util'])
   .controller('MainCtrl', [
