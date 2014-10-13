@@ -13,10 +13,15 @@
   angular.module = function(name) {
     var moduleInstance = _module.apply(angular, arguments);
     var useNamespace = false;
+    var delimeter = '.';
     
-    moduleInstance.namespace = function(flag) {
+    moduleInstance.namespace = function(flag, delim) {
       if (typeof flag === 'boolean') {
         useNamespace = flag;
+      }
+      
+      if (typeof delim === 'string') {
+        delimeter = delim;
       }
       
       return moduleInstance;
@@ -29,7 +34,7 @@
         var args = slice.call(arguments);
       
         if (useNamespace) {
-          args[0] = name + '.' + providerName;
+          args[0] = name + delimeter + providerName;
         }
 
         return _method.apply(moduleInstance, args);
