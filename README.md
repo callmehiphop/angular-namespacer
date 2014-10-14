@@ -3,7 +3,7 @@ angular-namespacer
 
 > Namespaces your Angular modules!
 
-Angular Namespacer essentially hacks `angular.module` and renames your Providers on the fly by concatenating the module name and provider name together. In order for this to effectively work, you must take advantage of the minification features.
+Angular Namespacer essentially hacks `angular.module` and renames your Providers on the fly by concatenating the module name and provider name together. In order for this to effectively work, you must take advantage of the minification features, or set a different delimeter in the options.
 
 ```javascript
 angular.module('util', [])
@@ -49,10 +49,10 @@ The global may also be set per-module instead.  Module options override global o
 ```javascript
 angular.module('util', [])
   .namespace(true, { delimter: '_', methods: 'constant value controller' })
-    .factory('someService', [
+    .service('someService', [
       function () {
         /* The service is not namespaced, since "service" does not appear in the "methods" options */
-        return {};
+        this.get42 = function () { return 42; };
       }
     ]);
     .controller('someController', [
