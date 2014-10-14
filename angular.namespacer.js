@@ -1,27 +1,39 @@
-;(function(angular) {
+;(function(angular, defaults) {
 
   'use strict';
 
   if (!angular) {
     return;
   }
+  
+  defaults = defaults || {};
 
   var slice = Array.prototype.slice;
   var _module = angular.module;
-  var methods = 'constant decorator factory provider service value'.split(' ');
 
   angular.module = function(name) {
     var moduleInstance = _module.apply(angular, arguments);
     var useNamespace = false;
-    var delimeter = '.';
-    
-    moduleInstance.namespace = function(flag, delim) {
+    var delimeter = defaults.delimeter || '.',
+    var methods = defaults.methods || 'constant decorator factory provider service value';
+
+    moduleInstance.namespace = function(flag, options) {
+      options = options || { };
+      
       if (typeof flag === 'boolean') {
         useNamespace = flag;
       }
       
-      if (typeof delim === 'string') {
-        delimeter = delim;
+      if (typeof options.delimeter === 'string') {
+        delimeter = options.delimeter;
+      }
+      
+      if (typeof options.methods !== 'undefined') {
+        methods = options.methods;
+      }
+
+      if (typeof methods === 'string') {
+        methods = methods.split(' ');
       }
       
       return moduleInstance;
@@ -44,4 +56,4 @@
     return moduleInstance;
   };
 
-}(this.angular));
+}(this.angular, this.hasOwnProperty('ngNamespacerDefaults') ? this.ngNamespacerDefaults : null));
