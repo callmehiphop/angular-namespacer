@@ -29,8 +29,8 @@ describe('angular namespacer', function () {
   it('should allow you to override the default delimiter', function () {
     angular
       .module('aww')
-      .namespace(function (options) {
-        options.delimiter = '_';
+      .namespace({
+        delimiter: '_'
       })
       .factory('yiss', angular.noop);
 
@@ -41,8 +41,8 @@ describe('angular namespacer', function () {
   it('should only namespace specified methods', function () {
     angular
       .module('aww')
-      .namespace(function (options) {
-        options.methods = ['factory'];
+      .namespace({
+        methods: ['factory']
       })
       .value('yeah', true)
       .factory('yiss', angular.noop);

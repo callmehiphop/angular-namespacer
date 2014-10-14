@@ -28,11 +28,10 @@
    * @param {Function} callback
    * @return {Object}
    */
-  function getNsOptions (callback) {
+  function getNsOptions (instanceOptions) {
     var options = angular.copy(defaults);
 
-    angular.extend(options, getUserOptions());
-    (callback || angular.noop)(options);
+    angular.extend(options, getUserOptions(), instanceOptions);
     return options;
   }
 
@@ -60,8 +59,8 @@
   angular.module = function (moduleName, requires, configFn) {
     var instance = angularModule(moduleName, requires, configFn);
 
-    instance.namespace = function (namespaceFn) {
-      monkeyPatch(instance, getNsOptions(namespaceFn));
+    instance.namespace = function (options) {
+      monkeyPatch(instance, getNsOptions(options || {}));
       return instance;
     };
 
