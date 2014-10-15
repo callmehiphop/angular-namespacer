@@ -3,23 +3,54 @@ angular-namespacer
 
 > Namespaces your Angular modules!
 
-Angular Namespacer essentially hacks `angular.module` and renames your Providers on the fly by concatenating the module name and provider name together. In order for this to effectively work, you must take advantage of the minification features.
+Angular Namespacer is a monkey patch for `angular.module` that allows you create
+a namespace of sorts for you services and what not.
 
 ```javascript
-angular.module('util', [])
-  .namespace(true)
-    .factory('thing', function() {
-      return 1 + 2;
-    });
+angular
+  .module('util', [])
+  .namespace()
+  .factory('thing', function () {
+    return 1 + 2;
+  });
 
-angular.module('myApp', ['util'])
+angular
+  .module('myApp', ['util'])
   .controller('MainCtrl', [
-    // dependencies
     '$scope',
     'util.thing',
-    // give your provider a fancy alias!
-    function($scope, superAmazingThing) {
-      $scope.sweetData = superAmazingThing;
+    function ($scope, thing) {
+      $scope.sweetData = thing;
     }
   ]);
+```
+
+## options
+
+```javascript
+angular
+  .module('util', [])
+  .namespace({
+    delimiter: '.',
+    methods: [
+      'factory',
+      'service',
+      'provider',
+      'constant',
+      'value'
+    ]
+  });
+```
+
+## global defaults
+
+You can optionally configure a module to set the default options. This might be
+useful if you want to use `'_'` as your delimiter everywhere in the application
+
+```javascript
+angular
+  .module('ns', [])
+  .value('config', {
+    delimiter: '_'
+  });
 ```
