@@ -38,6 +38,18 @@ describe('angular namespacer', function () {
     expect($injector.has('aww_yiss')).to.be.true;
   });
 
+  it('should ignore delimiter and camel case names if asked', function () {
+    angular
+      .module('aww')
+      .namespace({
+        camelCase: true
+      })
+      .factory('yiss', angular.noop);
+
+    bootstrap();
+    expect($injector.has('awwYiss')).to.be.true
+  });
+
   it('should only namespace specified methods', function () {
     angular
       .module('aww')

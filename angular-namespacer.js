@@ -7,7 +7,8 @@
 
   var defaults = {
     methods: 'constant factory provider service value'.split(' '),
-    delimiter: '.'
+    delimiter: '.',
+    camelCase: false
   };
 
   /**
@@ -35,6 +36,10 @@
     return options;
   }
 
+  function capitalize (str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   /**
    * Monkey patches the instance methods to apply namespace
    * @param {Object} angular module
@@ -47,7 +52,12 @@
       instance[method] = function () {
         var args = slice.call(arguments);
 
-        args[0] = [instance.name, args[0]].join(options.delimiter);
+        if (options.camelCase) {
+          args[0] = instance.name + capitalize(args[0]);
+        } else {
+          args[0] = [instance.name, args[0]].join(options.delimiter);
+        }
+        
         return instanceMethod.apply(instance, args);
       };
     });
