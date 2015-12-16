@@ -47,7 +47,7 @@ describe('angular namespacer', function () {
       .factory('yiss', angular.noop);
 
     bootstrap();
-    expect($injector.has('awwYiss')).to.be.true
+    expect($injector.has('awwYiss')).to.be.true;
   });
 
   it('should only namespace specified methods', function () {

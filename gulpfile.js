@@ -1,7 +1,7 @@
 'use strict';
 
-var gulp = require('gulp'); 
-var karma = require('karma'); 
+var gulp = require('gulp');
+var karma = require('karma');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var jshint = require('gulp-jshint');

@@ -57,7 +57,7 @@
         } else {
           args[0] = [instance.name, args[0]].join(options.delimiter);
         }
-        
+
         return instanceMethod.apply(instance, args);
       };
     });
